@@ -6,7 +6,7 @@ namespace MatrizenBibliothek
     {
         double[,] chart;
         public int width { get; }
-        public int heigth {  get; }
+        public int heigth { get; }
 
         public Matrix(int m, int n)
         {
@@ -26,11 +26,13 @@ namespace MatrizenBibliothek
                     {
                         chart[i, j] = 0;
                     }
-            if (NullOrEinheit == 1) //erstelle Einheitsmatrix
+            else if (NullOrEinheit == 1) //erstelle Einheitsmatrix
                 for (int i = 0; i < heigth; i++)
                 {
                     chart[i, i] = 1;
                 }
+            else
+                throw new Exception("0 oder 1 als 3. param für Null- oder Einhaitsmatrix eingeben");
         }
 
         public void setWert(int i, int j, double wert)
@@ -49,7 +51,10 @@ namespace MatrizenBibliothek
             return chart[i, j];
         }
 
-
+        public void ThrowException()
+        {
+            throw new ArgumentException("bla");
+        }
 
 
     }
