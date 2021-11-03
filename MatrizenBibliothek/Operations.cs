@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MatrizenBibliothek
 {
@@ -37,9 +33,9 @@ namespace MatrizenBibliothek
             Matrix result = new Matrix(a.heigth, b.width);
             for (int i = 0; i < b.heigth; i++)
                 for (int j = 0; j < a.width; j++)
-                    result.setWert(i, j, Product(a,b,i,j));
+                    result.setWert(i, j, Product(a, b, i, j));
 
-                    return result;
+            return result;
         }
 
         private static double Product(Matrix a, Matrix b, int i, int j)
@@ -51,5 +47,55 @@ namespace MatrizenBibliothek
 
             return result;
         }
+
+        public static Matrix Inverse(Matrix matrix)
+        {
+            //Check for 0 in Diagonalen oder Determinante != 0
+            //for (int i = 0; i < matrix.heigth; i++)
+            //    if (matrix.getWert(i, i) == 0)
+            //        throw new Exception("Matrix besitzt keine Inverse.");
+
+            Matrix result = new Matrix(matrix.heigth, matrix.width,1);
+
+            for (int i = 0; i < matrix.heigth; i++)
+            {
+                for (int j = i; j < matrix.width; j++)  //Teile Zeile durch Diagonalwert
+                {
+                    matrix.setWert(i, j, matrix.getWert(i, j) / matrix.getWert(i, i));                        
+                    result.setWert(i, j, result.getWert(i, j) / matrix.getWert(i, i));
+                    if (matrix.getWert(i, i) < 0)       //wenn diagonalwert < 0
+                    {
+                        matrix.setWert(i, j, matrix.getWert(i, j) *-1);
+                        result.setWert(i, j, result.getWert(i, j) *-1);
+                    }
+                }
+                for (int k = i + 1; k < matrix.width; k++)  //erschaffe Nullen unter Diagonalelementen
+                {
+                    matrix.setWert(k, i, matrix.getWert(k, i) - matrix.getWert(i, i) * matrix.getWert(k, i));
+                    result.setWert(k, i, result.getWert(k, i) - matrix.getWert(i, i) * result.getWert(k, i));
+                }
+                for (int l = i - 1; l >= 0; l--)      //erschaffe Nullen ueber Diagonalelementen
+                {
+                    matrix.setWert(l, i, matrix.getWert(l, i) - matrix.getWert(i, i) * matrix.getWert(l, i));
+                    result.setWert(l, i, matrix.getWert(l, i) - result.getWert(i, i) * result.getWert(l, i));
+                }
+            }
+
+            return result;
+        }
+
+        private static Matrix TauscheZeilen(Matrix matrix, int zeileVon, int zeileNach)
+        {
+            double swap;
+            for (int j = 0; j < matrix.width; j++)
+            {
+                swap = matrix.getWert(zeileNach, j);
+                matrix.setWert(zeileNach, j, matrix.getWert(zeileVon, j));
+                matrix.setWert(zeileVon, j, swap);
+            }
+            return matrix;
+        }
+
+
     }
 }
