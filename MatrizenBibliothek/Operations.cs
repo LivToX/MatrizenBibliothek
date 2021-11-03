@@ -35,19 +35,19 @@ namespace MatrizenBibliothek
                 throw new Exception("Matrizen besitzen falsche Dimensionen.");
 
             Matrix result = new Matrix(a.heigth, b.width);
-            for (int i = 0; i < a.heigth; i++)
+            for (int i = 0; i < b.heigth; i++)
                 for (int j = 0; j < a.width; j++)
                     result.setWert(i, j, Product(a,b,i,j));
 
                     return result;
         }
 
-        private static double Product(Matrix a, Matrix b, int k, int l)
+        private static double Product(Matrix a, Matrix b, int i, int j)
         {
             double result = 0;
-            for (int i = 0; i < a.heigth; i++)
-                for (int j = 0; j < a.width; j++)
-                     result += a.getWert(k, j) * b.getWert(i, l);
+            for (int k = 0; k < b.heigth; k++)
+                result += a.getWert(i, k) * b.getWert(k, j);
+
 
             return result;
         }
