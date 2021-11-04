@@ -50,36 +50,73 @@ namespace MatrizenBibliothek
 
         public static Matrix Inverse(Matrix matrix)
         {
-            //Check for 0 in Diagonalen oder Determinante != 0
-            //for (int i = 0; i < matrix.heigth; i++)
-            //    if (matrix.getWert(i, i) == 0)
-            //        throw new Exception("Matrix besitzt keine Inverse.");
+            Matrix result = new Matrix(matrix.heigth, matrix.width, 1);
 
-            Matrix result = new Matrix(matrix.heigth, matrix.width,1);
+            for (int i = 0; i < matrix.heigth; i++)     //Check ob NUllen auf Diagonale, dann Zeilen Tauschen
+                if (matrix.getWert(i, i) == 0)
+                {
+                    for (int h = i + 1; h < matrix.heigth; h++)
+                        if (matrix.getWert(h, i) != 0)
+                        {
+                            matrix = TauscheZeilen(matrix, i, h);
+                            result = TauscheZeilen(result, i, h);
+                        }
+                }
 
             for (int i = 0; i < matrix.heigth; i++)
             {
-                for (int j = i; j < matrix.width; j++)  //Teile Zeile durch Diagonalwert
+                if (matrix.getWert(i, i) != 1)  //wenn noch keine 1 auf Diagonale steht
                 {
-                    matrix.setWert(i, j, matrix.getWert(i, j) / matrix.getWert(i, i));                        
-                    result.setWert(i, j, result.getWert(i, j) / matrix.getWert(i, i));
-                    if (matrix.getWert(i, i) < 0)       //wenn diagonalwert < 0
+                    double divider = matrix.getWert(i, i);
+                    for (int j = i; j < matrix.width; j++) //teile Zeile durch Diagonalwert für 1 auf Diagonale
                     {
-                        matrix.setWert(i, j, matrix.getWert(i, j) *-1);
-                        result.setWert(i, j, result.getWert(i, j) *-1);
+                        matrix.setWert(i, j, matrix.getWert(i, j) / divider);
+                        result.setWert(i, j, result.getWert(i, j) / divider);
                     }
                 }
-                for (int k = i + 1; k < matrix.width; k++)  //erschaffe Nullen unter Diagonalelementen
+
+                for (int k = i + 1; k < matrix.heigth; k++)  //Werte unter Diagonalelement auf Null
                 {
-                    matrix.setWert(k, i, matrix.getWert(k, i) - matrix.getWert(i, i) * matrix.getWert(k, i));
-                    result.setWert(k, i, result.getWert(k, i) - matrix.getWert(i, i) * result.getWert(k, i));
-                }
-                for (int l = i - 1; l >= 0; l--)      //erschaffe Nullen ueber Diagonalelementen
-                {
-                    matrix.setWert(l, i, matrix.getWert(l, i) - matrix.getWert(i, i) * matrix.getWert(l, i));
-                    result.setWert(l, i, matrix.getWert(l, i) - result.getWert(i, i) * result.getWert(l, i));
+                    if (matrix.getWert(k, i) < 0)
+                    {
+                        double factor = matrix.getWert(k, i);
+                        matrix = ZeileMinusZeile(matrix, k, i, factor);
+                        result = ZeileMinusZeile(result, k, i, factor);
+                    }
+                    else if (matrix.getWert(k, i) > 0)
+                    {
+                        double factor = matrix.getWert(k, i);
+                        matrix = ZeileMinusZeile(matrix, k, i, factor);
+                        result = ZeileMinusZeile(result, k, i, factor);
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
             }
+
+            for (int i = matrix.width - 1; i > 0; i--)          //Werte über Diagonalelementen auf Null
+            {
+                for (int j = i - 1; j >= 0; j--)
+                    if (matrix.getWert(j, i) < 0)
+                    {
+                        double factor = matrix.getWert(j, i);
+                        matrix = ZeileMinusZeile(matrix, j, i, factor);
+                        result = ZeileMinusZeile(result, j, i, factor);
+                    }
+                    else if (matrix.getWert(j, i) > 0)
+                    {
+                        double factor = matrix.getWert(j, i);
+                        matrix = ZeileMinusZeile(matrix, j, i, factor);
+                        result = ZeileMinusZeile(result, j, i, factor);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+            }
+
 
             return result;
         }
@@ -93,6 +130,18 @@ namespace MatrizenBibliothek
                 matrix.setWert(zeileNach, j, matrix.getWert(zeileVon, j));
                 matrix.setWert(zeileVon, j, swap);
             }
+            return matrix;
+        }
+
+        private static Matrix ZeileMinusZeile(Matrix matrix, int ZeileA, int ZeileB, double factor)
+        {
+            //Zeile A minus Zeile B
+
+            for (int j = 0; j < matrix.width; j++)
+            {
+                matrix.setWert(ZeileA, j, matrix.getWert(ZeileA, j) - matrix.getWert(ZeileB, j) * factor);
+            }
+
             return matrix;
         }
 

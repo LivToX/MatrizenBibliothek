@@ -82,24 +82,39 @@ namespace MatrizenTests
         public void InverseTest()
         {
             //Arrange
-            Matrix matrix = new Matrix(2, 2);
-            matrix.setWert(0, 0, 1);
-            matrix.setWert(0, 1, -2);
-            matrix.setWert(1, 0, -1);
-            matrix.setWert(1, 1, 3);
+            Matrix matrix = new Matrix(3, 3);
+            matrix.setWert(0, 0, -7);
+            matrix.setWert(0, 1, -1);
+            matrix.setWert(0, 2, 2);
+            matrix.setWert(1, 0, 0);
+            matrix.setWert(1, 1, 1);
+            matrix.setWert(1, 2, 4);
+            matrix.setWert(2, 0, -1);
+            matrix.setWert(2, 1, 0);
+            matrix.setWert(2, 2, 1);
 
-            Matrix expected = new Matrix(2, 2);
-            expected.setWert(0, 0, 3);
-            expected.setWert(0, 1, 2);
-            expected.setWert(1, 0, 1);
-            expected.setWert(1, 1, 1);
+            Matrix expected = new Matrix(3, 3);
+            expected.setWert(0, 0, -1);
+            expected.setWert(0, 1, -1);
+            expected.setWert(0, 2, 6);
+            expected.setWert(1, 0, 4);
+            expected.setWert(1, 1, 5);
+            expected.setWert(1, 2, -28);
+            expected.setWert(2, 0, -1);
+            expected.setWert(2, 1, -1);
+            expected.setWert(2, 2, 7);
             //Act
             Matrix actual = Operations.Inverse(matrix);
             //Assert
             Assert.Equal(expected.getWert(0, 0), actual.getWert(0, 0));
             Assert.Equal(expected.getWert(0, 1), actual.getWert(0, 1));
+            Assert.Equal(expected.getWert(0, 2), actual.getWert(0, 2));
             Assert.Equal(expected.getWert(1, 0), actual.getWert(1, 0));
             Assert.Equal(expected.getWert(1, 1), actual.getWert(1, 1));
+            Assert.Equal(expected.getWert(1, 2), actual.getWert(1, 2));
+            Assert.Equal(expected.getWert(2, 0), actual.getWert(2, 0));
+            Assert.Equal(expected.getWert(2, 2), actual.getWert(2, 1));
+            Assert.Equal(expected.getWert(2, 1), actual.getWert(2, 2));
 
         }
     }
