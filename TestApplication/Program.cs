@@ -30,7 +30,7 @@ namespace TestApplication
             expected.setWert(2, 1, -1);
             expected.setWert(2, 2, 7);
             //Act
-            Matrix actual = Operations.Inverse(matrix);
+            Matrix actual = Operations.Inverse(matrix,0);
             //Assert
 
 

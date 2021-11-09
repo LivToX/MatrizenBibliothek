@@ -48,11 +48,11 @@ namespace MatrizenBibliothek
             return result;
         }
 
-        public static Matrix Inverse(Matrix matrix)
+        public static Matrix Inverse(Matrix matrix, int rundenAufNachKomma)
         {
             Matrix result = new Matrix(matrix.heigth, matrix.width, 1);
 
-            for (int i = 0; i < matrix.heigth; i++)     //Check ob NUllen auf Diagonale, dann Zeilen Tauschen
+            for (int i = 0; i < matrix.heigth; i++)     //Check ob Nullen auf Diagonale, dann Zeilen Tauschen
                 if (matrix.getWert(i, i) == 0)
                 {
                     for (int h = i + 1; h < matrix.heigth; h++)
@@ -68,7 +68,7 @@ namespace MatrizenBibliothek
                 if (matrix.getWert(i, i) != 1)  //wenn noch keine 1 auf Diagonale steht
                 {
                     double divider = matrix.getWert(i, i);
-                    for (int j = i; j < matrix.width; j++) //teile Zeile durch Diagonalwert für 1 auf Diagonale
+                    for (int j = 0; j < matrix.width; j++) //teile Zeile durch Diagonalwert für 1 auf Diagonale
                     {
                         matrix.setWert(i, j, matrix.getWert(i, j) / divider);
                         result.setWert(i, j, result.getWert(i, j) / divider);
@@ -117,6 +117,7 @@ namespace MatrizenBibliothek
                     }
             }
 
+            result = Round(result, rundenAufNachKomma);
 
             return result;
         }
@@ -141,6 +142,20 @@ namespace MatrizenBibliothek
             {
                 matrix.setWert(ZeileA, j, matrix.getWert(ZeileA, j) - matrix.getWert(ZeileB, j) * factor);
             }
+
+            return matrix;
+        }
+
+        private static Matrix Round(Matrix matrix, int rundenAufNachKomma)
+        {    //Rundet Matrix auf angegebene nachkomma Stelle
+            for(int i =0;i<matrix.heigth;i++)
+                for(int j = 0;j<matrix.width;j++)
+                {
+                    if(rundenAufNachKomma >0)
+                    matrix.setWert(i, j, Math.Round(matrix.getWert(i, j),rundenAufNachKomma));
+                    else
+                        matrix.setWert(i, j, Math.Round(matrix.getWert(i, j)));
+                }
 
             return matrix;
         }

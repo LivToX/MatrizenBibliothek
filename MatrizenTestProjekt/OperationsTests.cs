@@ -104,7 +104,7 @@ namespace MatrizenTests
             expected.setWert(2, 1, -1);
             expected.setWert(2, 2, 7);
             //Act
-            Matrix actual = Operations.Inverse(matrix);
+            Matrix actual = Operations.Inverse(matrix,0);
             //Assert
             Assert.Equal(expected.getWert(0, 0), actual.getWert(0, 0));
             Assert.Equal(expected.getWert(0, 1), actual.getWert(0, 1));
@@ -113,8 +113,8 @@ namespace MatrizenTests
             Assert.Equal(expected.getWert(1, 1), actual.getWert(1, 1));
             Assert.Equal(expected.getWert(1, 2), actual.getWert(1, 2));
             Assert.Equal(expected.getWert(2, 0), actual.getWert(2, 0));
-            Assert.Equal(expected.getWert(2, 2), actual.getWert(2, 1));
-            Assert.Equal(expected.getWert(2, 1), actual.getWert(2, 2));
+            Assert.Equal(expected.getWert(2, 1), actual.getWert(2, 1));
+            Assert.Equal(expected.getWert(2, 2), actual.getWert(2, 2));
 
         }
     }
