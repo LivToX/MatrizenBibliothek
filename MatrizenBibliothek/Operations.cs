@@ -50,6 +50,9 @@ namespace MatrizenBibliothek
 
         public static Matrix Inverse(Matrix matrix, int rundenAufNachKomma)
         {
+            if (matrix.heigth != matrix.width)
+                throw new Exception("Matrix ist nicht auadratisch. Nur quadratische Matrizen besitzen Inverse.");
+
             Matrix result = new Matrix(matrix.heigth, matrix.width, 1);
 
             for (int i = 0; i < matrix.heigth; i++)     //Check ob Nullen auf Diagonale, dann Zeilen Tauschen
@@ -148,11 +151,11 @@ namespace MatrizenBibliothek
 
         private static Matrix Round(Matrix matrix, int rundenAufNachKomma)
         {    //Rundet Matrix auf angegebene nachkomma Stelle
-            for(int i =0;i<matrix.heigth;i++)
-                for(int j = 0;j<matrix.width;j++)
+            for (int i = 0; i < matrix.heigth; i++)
+                for (int j = 0; j < matrix.width; j++)
                 {
-                    if(rundenAufNachKomma >0)
-                    matrix.setWert(i, j, Math.Round(matrix.getWert(i, j),rundenAufNachKomma));
+                    if (rundenAufNachKomma > 0)
+                        matrix.setWert(i, j, Math.Round(matrix.getWert(i, j), rundenAufNachKomma));
                     else
                         matrix.setWert(i, j, Math.Round(matrix.getWert(i, j)));
                 }
