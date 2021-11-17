@@ -125,6 +125,80 @@ namespace MatrizenBibliothek
             return result;
         }
 
+        public static Matrix LgsLoesen(Matrix matrix)
+        {
+
+
+            for (int i = 0; i < matrix.heigth; i++)     //Check ob Nullen auf Diagonale, dann Zeilen Tauschen
+                if (matrix.getWert(i, i) == 0)
+                {
+                    for (int h = i + 1; h < matrix.heigth; h++)
+                        if (matrix.getWert(h, i) != 0)
+                        {
+                            matrix = TauscheZeilen(matrix, i, h);
+                        }
+                }
+
+            for (int i = 0; i < matrix.heigth; i++)
+            {
+                if (matrix.getWert(i, i) != 1)  //wenn noch keine 1 auf Diagonale steht
+                {
+                    double divider = matrix.getWert(i, i);
+                    for (int j = 0; j < matrix.width; j++) //teile Zeile durch Diagonalwert für 1 auf Diagonale
+                    {
+                        matrix.setWert(i, j, matrix.getWert(i, j) / divider);
+                    }
+                }
+
+                for (int k = i + 1; k < matrix.heigth; k++)  //Werte unter Diagonalelement auf Null
+                {
+                    if (matrix.getWert(k, i) < 0)
+                    {
+                        double factor = matrix.getWert(k, i);
+                        matrix = ZeileMinusZeile(matrix, k, i, factor);
+                    }
+                    else if (matrix.getWert(k, i) > 0)
+                    {
+                        double factor = matrix.getWert(k, i);
+                        matrix = ZeileMinusZeile(matrix, k, i, factor);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            for (int i = matrix.width - 2; i > 0; i--)          //Werte über Diagonalelementen auf Null
+            {
+                for (int j = i - 1; j >= 0; j--)
+                    if (matrix.getWert(j, i) < 0)
+                    {
+                        double factor = matrix.getWert(j, i);
+                        matrix = ZeileMinusZeile(matrix, j, i, factor);
+                    }
+                    else if (matrix.getWert(j, i) > 0)
+                    {
+                        double factor = matrix.getWert(j, i);
+                        matrix = ZeileMinusZeile(matrix, j, i, factor);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+            }
+
+          //  result = Round(result, rundenAufNachKomma);
+
+            return matrix;
+        }
+
+
+
+
+
+
+
         private static Matrix TauscheZeilen(Matrix matrix, int zeileVon, int zeileNach)
         {
             double swap;

@@ -115,7 +115,54 @@ namespace MatrizenTests
             Assert.Equal(expected.getWert(2, 0), actual.getWert(2, 0));
             Assert.Equal(expected.getWert(2, 1), actual.getWert(2, 1));
             Assert.Equal(expected.getWert(2, 2), actual.getWert(2, 2));
+        }
 
+        [Fact]
+        public void LgsLoesenTest()
+        {
+            //Arrange
+            Matrix links = new Matrix(4, 5);
+            links.setWert(0, 0, 0);
+            links.setWert(0, 1, 10);
+            links.setWert(0, 2, 0);
+            links.setWert(0, 3, 12);
+            links.setWert(0, 4, -6);
+
+            links.setWert(1, 0, 4);
+            links.setWert(1, 1, -5);
+            links.setWert(1, 2, -2);
+            links.setWert(1, 3, -8);
+            links.setWert(1, 4, -17);
+
+            links.setWert(2, 0, 0);
+            links.setWert(2, 1, -5);
+            links.setWert(2, 2, 0);
+            links.setWert(2, 3, -4);
+            links.setWert(2, 4, -23);
+
+            links.setWert(3, 0, 4);
+            links.setWert(3, 1, -10);
+            links.setWert(3, 2, 0);
+            links.setWert(3, 3, -16);
+            links.setWert(3, 4, 2);
+
+
+
+
+            Matrix expected = new Matrix(4, 5);
+            expected.setWert(0, 4, -14);
+            expected.setWert(1, 4, 15);
+            expected.setWert(2, 4, -5);
+            expected.setWert(3, 4, -13);
+
+            //Act
+            Matrix actual = Operations.LgsLoesen(links);
+
+            //Assert
+            Assert.Equal(expected.getWert(0, 4), actual.getWert(0, 4));
+            Assert.Equal(expected.getWert(1, 4), actual.getWert(1, 4));
+            Assert.Equal(expected.getWert(2, 4), actual.getWert(2, 4));
+            Assert.Equal(expected.getWert(3, 4), actual.getWert(3, 4));
         }
     }
 }
