@@ -164,5 +164,30 @@ namespace MatrizenTests
             Assert.Equal(expected.getWert(2, 4), actual.getWert(2, 4));
             Assert.Equal(expected.getWert(3, 4), actual.getWert(3, 4));
         }
+
+        [Fact]
+        public void TransponierenTest()
+        {
+            //Arrange
+            Matrix expected = new Matrix(2, 2);
+            expected.setWert(0, 0, 1);
+            expected.setWert(0, 1, 3);
+            expected.setWert(1, 0, 2);
+            expected.setWert(1, 1, 4);
+
+            Matrix matrix = new Matrix(2, 2);
+            matrix.setWert(0, 0, 1);
+            matrix.setWert(0, 1, 2);
+            matrix.setWert(1, 0, 3);
+            matrix.setWert(1, 1, 4);
+            //Act
+            Matrix actual = Operations.Transponiere(matrix);
+
+            //Assert
+            Assert.Equal(expected.getWert(0, 0), actual.getWert(0, 0));
+            Assert.Equal(expected.getWert(0, 1), actual.getWert(0, 1));
+            Assert.Equal(expected.getWert(1, 0), actual.getWert(1, 0));
+            Assert.Equal(expected.getWert(1, 1), actual.getWert(1, 1));
+        }
     }
 }

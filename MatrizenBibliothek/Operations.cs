@@ -188,16 +188,21 @@ namespace MatrizenBibliothek
                     }
             }
 
-          //  result = Round(result, rundenAufNachKomma);
+            //  result = Round(result, rundenAufNachKomma);
 
             return matrix;
         }
 
+        public static Matrix Transponiere(Matrix matrix)
+        {
+            Matrix result = new Matrix(matrix.width, matrix.heigth);
 
+            for (int i = 0; i < matrix.heigth; i++)
+                for (int j = 0; j < matrix.width; j++)
+                    result.setWert(j, i, matrix.getWert(i, j));
 
-
-
-
+            return result;
+        }
 
         private static Matrix TauscheZeilen(Matrix matrix, int zeileVon, int zeileNach)
         {
