@@ -52,30 +52,29 @@ namespace MatrizenTests
         {
             //Arrange
             Matrix a = new Matrix(3, 3);
-            Matrix b = new Matrix(3, 3);
-            for (int i = 0; i < a.heigth; i++)
-                for (int j = 0; j < a.width; j++)
-                {
-                    a.setWert(i, j, 3);
-                    b.setWert(i, j, 5);
-                }
-            a.setWert(2, 2, 1);
-            b.setWert(2, 2, 1);
+            Matrix b = new Matrix(3, 1);
+
+            a.setWert(0, 0, 0.9);
+            a.setWert(0, 1, 0.3);
+            a.setWert(0, 2, 0.4);
+            a.setWert(1, 0, 0.2);
+            a.setWert(1, 1, 0.8);
+            a.setWert(1, 2, 0.2);
+            a.setWert(2, 0, 0.1);
+            a.setWert(2, 1, 0.5);
+            a.setWert(2, 2, 0.6);
+
+            b.setWert(0, 0, 0.9);
+            b.setWert(1, 0, 0.1);
+            b.setWert(2, 0, 0.8);
+
             //Act
             Matrix actual = Operations.Multiplikation(a, b);
             //Assert
-            Assert.Equal(45, actual.getWert(0, 0));
-            Assert.Equal(45, actual.getWert(0, 1));
-            Assert.Equal(45, actual.getWert(1, 0));
-            Assert.Equal(45, actual.getWert(1, 1));
+            Assert.Equal(1.1600000000000001, actual.getWert(0, 0));
+            Assert.Equal(0.42000000000000004, actual.getWert(1, 0));
+            Assert.Equal(0.62, actual.getWert(2, 0));
 
-            Assert.Equal(33, actual.getWert(0, 2));
-            Assert.Equal(33, actual.getWert(1, 2));
-
-            Assert.Equal(35, actual.getWert(2, 0));
-            Assert.Equal(35, actual.getWert(2, 1));
-
-            Assert.Equal(31, actual.getWert(2, 2));
         }
 
         [Fact]
