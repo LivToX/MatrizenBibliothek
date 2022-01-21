@@ -31,8 +31,8 @@ namespace MatrizenBibliothek
                 throw new Exception("Matrizen besitzen falsche Dimensionen.");
 
             Matrix result = new Matrix(a.heigth, b.width);
-            for (int i = 0; i < b.heigth; i++)
-                for (int j = 0; j < a.width; j++)
+            for (int i = 0; i < a.heigth; i++)
+                for (int j = 0; j < b.width; j++)
                     result.setWert(i, j, Product(a, b, i, j));
 
             return result;
